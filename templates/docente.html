@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang = "it">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset = "utf-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity = "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin = "anonymous">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- My styles -->
+        <link rel = "stylesheet" href = "static/css/style.css">
+
+        <title>Admin Ca' Foscari DAIS</title>
+        <link rel = "icon" href = "static/images/iconcf.png">
+    </head>
+    <body class="body-admin">
+    	<nav class="navbar navbar-expand-lg navbar-light pl-xl-5" style="background-color:#bd2130;">
+			
+			<a class="navbar-brand pl-xl-5 pr-5 font-weight-bold" href="{{url_for('main.docente')}}">Ca' Foscari DAIS - Professor</a>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fas fa-bars text-white"></i>
+			</button>
+			<div class="collapse navbar-collapse ml-4" id="navbarNavAltMarkup">
+				
+			</div>
+			
+			<div class="align-items-end pr-5" id="navbar-list">
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img src="https://i.pinimg.com/originals/8e/88/f4/8e88f4561b02f111fd55434f2328dd54.jpg" width="40" height="40" class="rounded-circle">
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style = "min-width: 0rem;">
+							<h6 class="text-wrap" >Last access: {{last_access}}</h6>
+							<hr/>
+							<a class="dropdown-item" href="{{url_for('auth.logout')}}">Log Out</a>
+						</div>
+					</li>   
+				</ul>
+			</div>	
+		</nav>
+
+   		<div class = "row justify-content-center content-wrapper mb-0 mx-0">   	
+			<div class = "container">
+
+				<h1 class = "font-weight-bold mb-5" >My courses</h1>
+
+				<table class="table">
+				  <thead class="thead-light">
+					<tr>
+					  <th scope="col">#</th>
+					  <th scope="col">Name Course</th>
+					  <th scope="col">Demography</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					{% for x in corsi_docente%}
+						<tr>
+					  		<th scope="row">{{x.id}}</th>
+					  		<td>{{x.nome}}</td>
+					  		<td><a type = "button" class = "btn btn-secondary" href = "{{url_for('main.vedi_demografia', id=x.id)}}">Show</a></td>
+						</tr>
+					{%endfor%}
+				  </tbody>
+				</table>
+			</div>	         
+  		</div>
+		
+		
+		<div class = "row mx-md-3">
+				<!-- AGGIUNGI UN CORSO -->
+				<div class = "col-md card text-left mx-md-3 px-3 py-3 mb-2" style="border:solid red;">
+					<div class = "row">
+						<h6 class = "col-md font-weight-bold">Enter course</h6>
+						<i class="col-6 text-right fas fa-plus fa-2x"></i>
+					</div>
+					<div class = "row px-5">
+						<form action = "{{url_for('main.inserimento_corsi')}}" method="POST">
+							<div class = "modal-body row py-2">
+						        <div class = "form-group row mt-3">
+						            <div class = "col-md-6 col-12 mb-3">
+						            	<label for = "nome"><h6>Name</h6></label>
+						            	<input type = "text" class = "form-control form-control-sm" name = "nome" required />
+						            </div>
+						            
+						            <div class = "col-md-6 col-12 mb-3">
+						            	<label for = "descrizione"><h6>Description</h6></label>
+						            	<input type = "text" class = "form-control form-control-sm" name = "descrizione" required />
+						            </div>
+						            
+						            <div class = "col-md-6 col-12 mb-3">
+						            	<label for = "posti"><h6>Max participants</h6></label>
+						            	<input type = "text" class = "form-control form-control-sm" name = "posti" required />
+						            </div>
+									
+									<div class = "col-md-6 col-12 mb-3">
+						            	<label for = "tipo"><h6>Online/Face-to-face lesson</h6></label>
+						            	<select  name="tipo" class = "form-control form-control-sm">
+											<option value="Online">Online</option>
+											<option value="In presenza">Face-to-face</option>
+										</select>
+						            </div>
+						        </div>
+							</div>
+							<div class = "modal-footer">
+								<button type = "submit" class = "btn" style = "background-color: #bd2130; color: #fff">Confirm</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<!-- AGGIUNGI UNA LEZIONE -->
+				<div class = "col-md card text-left mx-md-3 px-3 py-3 mb-2" style="border:solid red;">
+					<div class = "row">
+						<h6 class = "col-6 font-weight-bold">Enter lesson</h6>
+						<i class="col-6 text-right fas fa-plus fa-2x"></i>
+					</div>
+					<div class = "row px-5">
+						<form action = "{{url_for('main.inserimento_lezioni')}}" method="POST">
+							<div class = "modal-body row py-2">
+								<div class = "form-group row mt-3">
+
+									<div class = "col-md-6 col-12 mb-3">
+								    	<label for = "nome"><h6>N. Lesson</h6></label>
+								    	<select class = "custom-select custom-select-sm" name="nome">
+		                                    <option value = "Lezione 1">Lesson 1</option>
+											<option value = "Lezione 2">Lesson 2</option>
+											<option value = "Lezione 3">Lesson 3</option>
+											<option value = "Lezione 4">Lesson 4</option>
+											<option value = "Lezione 5">Lesson 5</option>
+		                            	</select>
+								    </div>
+
+								    <div class = "col-md-6 col-12 mb-3">
+								    	<label for = "orario"><h6>Time</h6></label>
+								    	<select class = "custom-select custom-select-sm" name="orario">
+		                                    <option value = "08:30 - 10:00">08:30 - 10:00</option>
+											<option value = "10:00 - 11:30">10:00 - 11:30</option>
+											<option value = "11:30 - 13:00">11:30 - 13:00</option>
+											<option value = "14:30 - 16:00">14:30 - 16:00</option>
+											<option value = "16:00 - 17:30">16:00 - 17:30</option>
+		                            	</select>
+								    </div>
+								    
+								    <div class = "col-md-6 col-12 mb-3">
+								    	<label for = "data"><h6>Date</h6></label>
+								    	<input type = "text" class = "form-control form-control-sm" name = "data" required />
+								    </div>
+
+									<div class = "col-md-12 col-12 mb-3">
+						            	<label for = "corso"><h6>Course Name</h6></label>
+										<select name ="corso" class = "form-control form-control-sm">
+											{%for x in corsi_docente:%}
+												<option value="{{x.id}}">{{x.nome}}</option>
+											{%endfor%}
+										</select>						            	
+						            </div>
+
+								</div>
+							</div>
+							<div class = "modal-footer">
+								<button type = "submit" class = "btn" style = "background-color: #bd2130; color: #fff">Confirm</button>
+							</div>
+						</form>
+					</div>
+				</div>
+	
+				<!-- RIMUOVI UN CORSO -->
+				<div class = "col-md card text-left mx-md-3 px-3 py-3 mb-2">
+					<div class = "row">
+						<h6 class = "col-md font-weight-bold">Delete course</h6>
+						<i class="col-6 text-right far fa-trash-alt fa-2x"></i>
+					</div>
+					<div class = "row px-5">
+						<form action = "{{url_for('main.cancellazione_corsi')}}" method="POST">
+							<div class = "modal-body row py-2">
+						        <div class = "form-group row mt-3">
+						        	<div class = "col-md-12 col-12 mb-3">
+						            	<label for = "id"><h6>Course Name</h6></label>
+										<select name ="id" class = "form-control form-control-sm">
+											{%for x in corsi_docente:%}
+												<option value="{{x.id}}">{{x.nome}}</option>
+											{%endfor%}
+										</select>
+						            	
+						            </div>
+						        </div>
+							</div>
+							<div class = "modal-footer">
+								<button type = "submit" class = "btn" style = "background-color: #bd2130; color: #fff">Confirm</button>
+							</div>
+						</form>
+					</div>
+				</div>
+		</div>
+		
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<div class="alert-danger" role="alert" style="background-color:yellow; border:3px solid black; text-align:center;">
+					    {{ messages[0] }}
+					</div>
+				{% endif %}
+			{% endwith %}
+
+    	<footer class="text-center" style="background-color:#bd2130;">
+			<div class="container pt-4">
+				<section class="mb-4">
+					<!-- Facebook -->
+					<a
+					class="btn btn-link btn-floating btn-lg text-white m-1"
+					href="#!"
+					role="button"
+					data-mdb-ripple-color="dark"
+					><i class="fab fa-facebook-f" style = "color: white"></i
+					></a>
+
+					<!-- Instagram -->
+					<a
+					class="btn btn-link btn-floating btn-lg text-white m-1"
+					href="#!"
+					role="button"
+					data-mdb-ripple-color="dark"
+					><i class="fab fa-instagram" style = "color: white"></i
+					></a>
+
+					<!-- Linkedin -->
+					<a
+					class="btn btn-link btn-floating btn-lg text-white m-1"
+					href="#!"
+					role="button"
+					data-mdb-ripple-color="dark"
+					><i class="fab fa-linkedin" style = "color: white"></i
+					></a>
+				</section>
+			</div>
+
+			<div class="text-center text-white p-3">
+			© 2022 Copyright:
+			<a class="text-white font-weight-bold" href="https://mdbootstrap.com/">Ca' Foscari DAIS team</a>
+			</div>
+		</footer>
+		
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
+        <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous"></script>
+	</body>
+</html>	

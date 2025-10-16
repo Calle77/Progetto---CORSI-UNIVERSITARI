@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang = "it">
+  <head>
+    	<!-- Required meta tags -->
+        <meta charset = "utf-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity = "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin = "anonymous">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- My styles -->
+        <link rel = "stylesheet" href = "static/css/style.css">
+
+        <title>Ca' Foscari DAIS</title>
+        <link rel = "icon" href = "static/images/iconcf.png">
+  </head>
+  <body>
+	<main class = "d-flex align-items-center min-vh-100 py-3 py-md-0 h-100">
+		<div class = "container">
+			<div class = "card login-card">
+				<div class = "row no-gutters">
+					<div class = "col-md-7 bg-light">
+						<img src = "static/images/dais.png" class = "login-card-image">
+					</div>
+					<div class = "col-md-5">
+						<div class = "card-body">
+							<div class = "d-flex justify-content-center">
+								<div class = "login-card-logo-container">
+									<img src="static/images/logo_MyUniVe.png" alt="logo" class = "login-card-logo">
+								</div>
+							</div>
+							<div class="brand-wrapper">
+								<h3 class="login-card-description mb-5"><strong>Login</strong></h3>
+							</div>
+							<form action = "/login" method = "POST">
+								<input type = "email" id = "email" name = "email" placeholder = "Email" class = "w-100 form-control" required/><br/>
+								<input type = "password" id = "password" name = "password" placeholder = "Password" class = "w-100 mb-4 form-control"required/>
+								<input type = "submit" value = "Login" class = "btn btn-primary w-100 mb-4">
+							</form>
+							
+							<p class = "login-password-link"><a href = "#">Forgot password?</a></p>
+							
+							<p class = "login-card-register mt-3">
+								Don't have an account? 
+								<a href = "{{ url_for('auth.signup') }}">Register here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<div class="alert-danger" role="alert" style="background-color:yellow; border:3px solid black; text-align:center;">
+					    {{ messages[0] }}
+					</div>
+				{% endif %}
+			{% endwith %}
+		</div>
+	</main>
+
+    <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous"></script>
+  </body>
+</html>
+
+
